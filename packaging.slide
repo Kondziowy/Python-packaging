@@ -1,0 +1,84 @@
+﻿Pyton jedzie na wycieczkę
+dystrybucja aplikacji w Pythonie
+27 Apr 2014
+Tags: exe, packaging, setuptools, virtualenv, nsis, pygda, presentation
+
+Konrad Brodzik
+Network Software Engineer, Intel NPG
+konrad+pygda@brodzik.it
+http://brodzik.it
+@lamafix
+
+* Pakowanie pytona do pudełka w 3 krokach
+
+???
+
+* Pakowanie pytona do pudełka w 3 krokach
+
+1. Weź pytona
+2. Włóż pytona do pudełka
+3. Zamknij pudełko
+
+* Weź pytona
+
+.image pyton.jpg
+
+* Włóż pytona do pudełka
+
+.image pudelko.jpg 480 640
+
+* Agenda
+
+1. Zbieranie wszystkich zależności - virtualenv
+2. Kompilowanie kodu Pythona do postaci binarnej - py2exe, freeze
+3. Samorozpakowujace się instalatory - NSIS, makeself
+
+* Virtualenv
+
+- Podmienia ścieżki, kopiuje Pythona do katalogu gdzie pracujemy
+- wszystko co instalujemy w jednym katalogu
+- Wieloplatformowy
+
+virtualenv zagroda
+cd zagroda
+source bin/activate
+
+* Setuptools
+
+- Zróbmy ładny instalator do naszego modułu w oparciu o plik setup.py
+- Kopiuje wskazane pliki do paczki .exe/.msi/.zip/.tar.gz
+
+.code setup-extended.py /setup\(/,/\]\)\]/
+
+python setup.py bdist --format=msi
+
+* Py2exe/freeze
+
+Zrzućmy prawie wszystko (kod, Pythona, biblioteki, bez obrazków) do jednego execa
+
+.code setup.py
+
+python setup.py py2exe
+
+* NSIS (Nullsoft Scriptable Installer System)
+
+- pakuje wszystko do instalatora .exe
+- pozwala na skryptowanie innych instalatorów, zmian w systemie itp.
+- działa pod Wine (budowanie paczki dla Windows pod Linuxem)
+- ma tryb cichy (bez konieczności klikania next)
+
+* makeself
+
+- dla Linuxa
+- zrzućmy wszystko (kod, Pythona, inne pliki) do pliku .run
+- pakuje pliki do samorozpakowującego się archiwum i uruchamia skrypt_instalacyjny
+
+makeself katalog plik.run "Moj fajny program" ./skrypt_instalacyjny
+
+* Przydatne linki
+
+https://virtualenv.pypa.io/en/latest/
+https://pythonhosted.org/setuptools/setuptools.html
+http://docs.python-guide.org/en/latest/shipping/freezing/
+http://megastep.org/makeself/
+http://nsis.sourceforge.net/
